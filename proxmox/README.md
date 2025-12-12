@@ -2,7 +2,7 @@
 
 ## Nodes
 
-### pve02 (Main)
+### pve01 (Main)
 
 | Property | Value |
 |----------|-------|

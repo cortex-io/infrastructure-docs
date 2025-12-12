@@ -15,7 +15,7 @@
 | IP | Hostname | Purpose |
 |----|----------|---------|
 | 10.88.140.1 | gateway | OPNsense router |
-| 10.88.140.164 | pve02 | Proxmox hypervisor |
+| 10.88.140.164 | pve01 | Proxmox hypervisor |
 | 10.88.140.202 | wazuh-server | Wazuh SIEM (VM 201) |
 | 10.88.140.252 | claude-vm | Claude agent VM |
 
@@ -79,7 +79,7 @@
             |               |               |
     ┌───────┴───────┐       |               |
     |               |       |           (reserved)
-   pve02        wazuh    k3s cluster
+   pve01        wazuh    k3s cluster
  .164            .202       |
                      ┌──────┼──────┐
                      |      |      |

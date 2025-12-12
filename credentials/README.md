@@ -6,7 +6,7 @@
 
 | Service | URL | Username | Password |
 |---------|-----|----------|----------|
-| pve02 Web UI | https://10.88.140.164:8006 | root | (your root password) |
+| pve01 Web UI | https://10.88.140.164:8006 | root | (your root password) |
 
 ## Wazuh (Security Monitoring)
 
@@ -17,14 +17,28 @@
 
 ## Kubernetes (k3s)
 
-### Monitoring Stack
+### Monitoring Stack (via Traefik Ingress + Port Forward)
+
+Add these entries to `/etc/hosts` pointing to pve01 (port forward):
+```
+10.88.140.164 grafana.cortex.local prometheus.cortex.local alertmanager.cortex.local longhorn.cortex.local traefik.cortex.local
+```
+
+A socat port forward runs on pve01:8080 -> k3s-master:31080 (Traefik NodePort).
 
 | Service | URL | Username | Password |
 |---------|-----|----------|----------|
-| Grafana | http://10.43.246.106 (cluster IP) | admin | cortex-admin |
-| Prometheus | http://10.43.55.247:9090 (cluster IP) | - | - |
-| Alertmanager | http://10.43.232.183:9093 (cluster IP) | - | - |
-| Longhorn UI | http://10.43.166.3 (cluster IP) | - | - |
+| Grafana | http://grafana.cortex.local:8080 | admin | cortex-admin |
+| Prometheus | http://prometheus.cortex.local:8080 | - | - |
+| Alertmanager | http://alertmanager.cortex.local:8080 | - | - |
+| Longhorn UI | http://longhorn.cortex.local:8080 | - | - |
+| Traefik Dashboard | http://traefik.cortex.local:8080/dashboard/ | - | - |
+
+**Alternative: Port Forward Access**
+```bash
+kubectl port-forward -n monitoring svc/kube-prometheus-stack-grafana 3000:80
+# Browse to http://localhost:3000
+```
 
 ### k3s Access
 
