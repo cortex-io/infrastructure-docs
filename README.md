@@ -1,41 +1,32 @@
-# RyOps Infrastructure Documentation
+<div align="center">
 
-Private documentation for homelab infrastructure.
+# Infrastructure Docs
 
-**WARNING: This repository contains sensitive credentials. Never make this repository public.**
+**Homelab infrastructure documentation — Proxmox, K3s, networking, and services.**
 
-## Quick Links
+> ⚠️ **This project is archived.** No longer under active development.
 
-- [Credentials](credentials/README.md) - All service passwords and API keys
-- [Proxmox](proxmox/README.md) - Hypervisor nodes and VMs/LXCs
-- [Kubernetes](kubernetes/k3s/README.md) - k3s cluster documentation
-- [Services](services/README.md) - Running services (Wazuh, n8n, etc.)
-- [Network](network/README.md) - Network topology and VLANs
+</div>
 
-## Infrastructure Overview
+---
 
-```
-                    Internet
-                        |
-                   [OPNsense]
-                        |
-        ┌───────────────┼───────────────┐
-        |               |               |
-   VLAN 140        VLAN 145        VLAN 150
-   (Default)       (k3s/Talos)     (Future)
-        |               |
-   ┌────┴────┐     ┌────┴────┐
-   |         |     |         |
-  pve02   Wazuh   k3s      Talos
-          VM      Cluster   (planned)
-```
+## What's Documented
 
-## Proxmox Nodes
+Reference documentation for a homelab running Proxmox virtualization with K3s Kubernetes clusters.
 
-| Node | IP | Purpose |
-|------|-----|---------|
-| pve02 | 10.88.140.164 | Main hypervisor |
+### Topics Covered
 
-## Last Updated
+- **Proxmox** — Hypervisor setup, VM management
+- **Kubernetes** — K3s cluster architecture, node configuration
+- **Networking** — VLAN topology, OPNsense firewall
+- **Services** — Wazuh (SIEM), n8n (automation), Grafana (monitoring)
 
-2024-12-11
+## Network Overview
+
+<div align="center"><img src="docs/architecture.svg" alt="Network Topology" width="800"></div>
+
+---
+
+<div align="center">
+<sub>No longer maintained.</sub>
+</div>

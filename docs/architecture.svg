@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 700" width="800" height="700">
+  <defs>
+    <style>
+      @keyframes pulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.6; transform: scale(1.03); }
+      }
+      @keyframes dashFlow {
+        to { stroke-dashoffset: -40; }
+      }
+      .node-box { fill: #161b22; stroke-width: 2; rx: 8; }
+      .label { fill: #c9d1d9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; font-weight: 600; text-anchor: middle; }
+      .sublabel { fill: #8b949e; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 11px; text-anchor: middle; }
+      .vlan-label { fill: #58a6ff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 13px; font-weight: 600; text-anchor: middle; }
+      .title-text { fill: #58a6ff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 11px; text-anchor: middle; text-transform: uppercase; letter-spacing: 2px; }
+      .conn { fill: none; stroke: #30363d; stroke-width: 2; stroke-dasharray: 8 6; animation: dashFlow 2s linear infinite; }
+      .conn-active { fill: none; stroke: #3fb950; stroke-width: 2; stroke-dasharray: 8 6; animation: dashFlow 1.5s linear infinite; }
+      .pulse-node { animation: pulse 2.5s ease-in-out infinite; transform-origin: center; }
+      .service-box { fill: #0d1117; stroke: #30363d; stroke-width: 1; rx: 5; }
+      .service-label { fill: #f0883e; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 11px; font-weight: 500; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="700" fill="#0d1117" rx="12"/>
+
+  <!-- Title -->
+  <text x="400" y="35" class="title-text">Homelab Network Topology</text>
+
+  <!-- Internet -->
+  <rect x="340" y="55" width="120" height="40" class="node-box" stroke="#8b949e"/>
+  <text x="400" y="80" class="label" fill="#8b949e">Internet</text>
+
+  <!-- Connection: Internet -> OPNsense -->
+  <line x1="400" y1="95" x2="400" y2="130" class="conn-active"/>
+
+  <!-- OPNsense (pulsing) -->
+  <g class="pulse-node">
+    <rect x="320" y="130" width="160" height="50" class="node-box" stroke="#f0883e"/>
+    <text x="400" y="155" class="label" fill="#f0883e">OPNsense</text>
+    <text x="400" y="172" class="sublabel">Firewall / Router</text>
+  </g>
+
+  <!-- Connection: OPNsense -> VLAN branches -->
+  <line x1="400" y1="180" x2="400" y2="220" class="conn"/>
+  <!-- Horizontal bar -->
+  <line x1="140" y1="220" x2="660" y2="220" class="conn" style="stroke-dasharray: none; animation: none; stroke: #30363d;"/>
+  <!-- Vertical drops -->
+  <line x1="140" y1="220" x2="140" y2="260" class="conn"/>
+  <line x1="400" y1="220" x2="400" y2="260" class="conn-active"/>
+  <line x1="660" y1="220" x2="660" y2="260" class="conn"/>
+
+  <!-- VLAN 140 (Default) -->
+  <rect x="65" y="260" width="150" height="45" class="node-box" stroke="#58a6ff"/>
+  <text x="140" y="280" class="vlan-label">VLAN 140</text>
+  <text x="140" y="297" class="sublabel">Default</text>
+
+  <!-- VLAN 145 (K3s) -->
+  <rect x="325" y="260" width="150" height="45" class="node-box" stroke="#3fb950"/>
+  <text x="400" y="280" class="vlan-label" fill="#3fb950">VLAN 145</text>
+  <text x="400" y="297" class="sublabel">K3s / Talos</text>
+
+  <!-- VLAN 150 (Future) -->
+  <rect x="585" y="260" width="150" height="45" class="node-box" stroke="#484f58"/>
+  <text x="660" y="280" class="vlan-label" fill="#484f58">VLAN 150</text>
+  <text x="660" y="297" class="sublabel">Future</text>
+
+  <!-- Connection: VLAN 140 -> Proxmox -->
+  <line x1="140" y1="305" x2="140" y2="360" class="conn"/>
+
+  <!-- Proxmox Host -->
+  <rect x="60" y="360" width="160" height="50" class="node-box" stroke="#58a6ff"/>
+  <text x="140" y="385" class="label">Proxmox</text>
+  <text x="140" y="402" class="sublabel">pve02 — Hypervisor</text>
+
+  <!-- Connection: VLAN 145 -> K3s Nodes -->
+  <line x1="400" y1="305" x2="400" y2="360" class="conn-active"/>
+
+  <!-- K3s Cluster box -->
+  <rect x="280" y="360" width="240" height="55" class="node-box" stroke="#3fb950"/>
+  <text x="400" y="385" class="label" fill="#3fb950">K3s Cluster</text>
+  <text x="400" y="404" class="sublabel">3 Nodes</text>
+
+  <!-- Connection: K3s -> Services -->
+  <line x1="400" y1="415" x2="400" y2="470" class="conn-active"/>
+
+  <!-- Services container -->
+  <rect x="240" y="470" width="320" height="160" rx="10" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
+  <text x="400" y="495" class="label" fill="#3fb950" font-size="12">Services</text>
+
+  <!-- Wazuh -->
+  <rect x="260" y="510" width="90" height="36" class="service-box"/>
+  <text x="305" y="533" class="service-label">Wazuh</text>
+  <text x="305" y="544" class="sublabel" font-size="9">SIEM</text>
+
+  <!-- Grafana -->
+  <rect x="360" y="510" width="90" height="36" class="service-box"/>
+  <text x="405" y="533" class="service-label">Grafana</text>
+  <text x="405" y="544" class="sublabel" font-size="9">Monitoring</text>
+
+  <!-- n8n -->
+  <rect x="460" y="510" width="80" height="36" class="service-box"/>
+  <text x="500" y="533" class="service-label">n8n</text>
+  <text x="500" y="544" class="sublabel" font-size="9">Automation</text>
+
+  <!-- Additional services row -->
+  <rect x="300" y="560" width="100" height="36" class="service-box"/>
+  <text x="350" y="580" class="sublabel" font-size="10" fill="#8b949e">+ more</text>
+
+  <!-- Footer -->
+  <text x="400" y="670" class="sublabel" font-size="11">Proxmox virtualization with K3s Kubernetes</text>
+</svg>
