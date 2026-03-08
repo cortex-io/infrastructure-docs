@@ -13,8 +13,8 @@
 
 | Interface | URL | Credentials |
 |-----------|-----|-------------|
-| Dashboard | https://10.88.140.202:443 | admin / *B96Y7a0t8Ep9cw+z0RSevdRHwLnsiay |
-| SSH | ssh wazuh@10.88.140.202 | wazuh / WazuhServer2024! |
+| Dashboard | https://10.88.140.202:443 | admin / [REDACTED - use secrets manager] |
+| SSH | ssh wazuh@10.88.140.202 | wazuh / [REDACTED - use secrets manager] |
 
 ### Monitored Agents
 
@@ -58,7 +58,7 @@ sudo tail -f /var/ossec/logs/ossec.log
 kubectl port-forward -n monitoring svc/kube-prometheus-stack-grafana 3000:80
 
 # Then browse to http://localhost:3000
-# Login: admin / cortex-admin
+# Login: admin / [REDACTED - use secrets manager]
 ```
 
 ---
